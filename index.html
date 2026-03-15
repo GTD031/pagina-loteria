@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>			<!-- LEYENDA: JS = JavaScript, nro = numero-->
+	<meta charset="utf-8">
+	<title>Generar números</title> 	
+	<style>
+		#contenedor {
+			position:relative;
+			width: 100%;
+			height:1200px;
+			background-image: url('https://www.megeve-tourisme.fr/app/uploads/2022/02/stelsia-casino-megeve.jpg');
+			background-repeat: no-repeat;
+		}	
+
+		button {
+			position:absolute;
+			top:50%;
+			left:50%;
+			padding:7px;
+			font-size:14px;
+			border-radius: 10px;
+			box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+			transform: translate(50%,50%);
+		}
+		#generarNro{
+			transform: translate(-120px,0px)
+		}
+
+		#comprobarNumero{
+			transform: translate(120px,0px)
+		}	
+	</style>
+	<script type="text/javascript">
+        var numeroJugado;
+        var numeroPremiado;
+
+        function GenerarNroAleatorio(){
+            var numero = Math.floor(100000*Math.random());
+            alert('Numero generado: '+numero);
+        }
+
+        function Rellenar(num){
+            while (num.length<5){
+                num = "0"+num;
+            }
+            return num;
+        }
+
+        function Coincidencia(num){
+            for(let i=0;i<num;i++){
+                if(numeroJugado.charAt(4-i) != numeroPremiado.charAt(4-i)){
+                    return(false);
+                }            
+            }
+            return(true);
+        }
+
+        function ComprobarNumero(){
+            var Regex = /^[0-9]{5}$/;
+            numeroJugado = prompt("Indique por favor un numero aleatorio de a lo sumo 5 cifras, que será el número jugado.");
+            numeroJugado = Rellenar(numeroJugado);
+            numeroPremiado = prompt("Indique por favor otro número de a lo sumo 5 cifras, que será el numero premiado.");
+            numeroPremiado = Rellenar(numeroPremiado);
+            if (!(Regex.test(numeroJugado) && Regex.test(numeroPremiado))){
+                alert('Error: Se deben introducir carácteres numéricos, hasta a lo sumo 5 dígitos.');
+            } else if(Coincidencia(5)){
+                alert('Número premiado. Premio:5000€');
+            } else if(Coincidencia(4)){
+                alert('Premio:500€');
+            } else if(Coincidencia(3)){
+                alert('Premio:50€');
+            } else if (Coincidencia(2)){
+                alert('Premio:5€');
+            } else if(numeroJugado.charAt(0) == numeroPremiado.charAt(0) || Coincidencia(0)){
+                alert('Premio:1€');
+            } else {
+                alert("No premiado. No hay coincidencia.");
+            }
+        }
+    </script>
+	</head>
+	<body>
+	<div id="contenedor">		<!-- CAJA CONTENEDORA -->
+	<!-- BOTÓN PARTE A. -->
+	<button id="generarNro" onclick="GenerarNroAleatorio()">Generar Número Aleatorio</button> <!-- Interesante el uso de <button> en lugar de  -->
+																							  <!-- <input>. Personalmente me interesa aprender mas sobre esta etiqueta -->
+	<!-- BOTÓN PARTE B. -->
+	<button id="comprobarNumero" onclick="ComprobarNumero()">Comprobar Número</button> 
+	</div>
+	</body>
+</html>
